@@ -1,14 +1,16 @@
 from sklearn import tree
 from sklearn.svm import LinearSVC
 from sklearn.naive_bayes import GaussianNB
-clf = tree.DecisionTreeClassifier()
+from sklearn.metrics import accuracy_score
+import numpy as np
+Treeclf = tree.DecisionTreeClassifier()
 SVCclf = LinearSVC()
 NBclf = GaussianNB()
 
 
 # CHALLENGE - create 3 more classifiers...
 # 1 DecisionTreeClasifier
-# 2 Linear Support Vector Macine
+# 2 Linear Support Vector Machine
 # 3 Gaussian Naive Bayes
 
 # [height, weight, shoe_size]
@@ -21,17 +23,26 @@ Y = ['male', 'male', 'female', 'female', 'male', 'male', 'female', 'female',
 
 
 # CHALLENGE - ...and train them on our data
-clf = clf.fit(X, Y)
+Treeclf = Treeclf.fit(X, Y)
 SVCclf = SVCclf.fit(X, Y)
 NBclf = NBclf.fit(X,Y)
 
-prediction1 = clf.predict([[160, 60, 38]])
-prediction2 = SVCclf.predict([[160, 60, 38]])
-prediction3 = NBclf.predict([[160, 60, 38]])
+
+prediction1 = Treeclf.predict(X)
+acc_tree = accuracy_score(Y, prediction1) * 100
+prediction2 = SVCclf.predict(X)
+acc_SVC = accuracy_score(Y, prediction2) * 100
+prediction3 = NBclf.predict(X)
+acc_NB = accuracy_score(Y, prediction3) * 100
 
 
 # CHALLENGE compare their reusults and print the best one!
 
-print(prediction1)
-print(prediction2)
-print(prediction3)
+print("Accuracy of DecisionTreeClasifier: ", acc_tree)
+print("Accuracy of Support Vector Machine: ", acc_SVC)
+print("Accuracy of Naive Bayes: ", acc_NB)
+
+
+index = np.argmax([acc_tree, acc_SVC, acc_NB])
+classifiers = {0: 'Decision Tree', 1: 'Support Vector Machine', 2: 'Naive Bayes'}
+print('Best gender classifier is {}'.format(classifiers[index]))
